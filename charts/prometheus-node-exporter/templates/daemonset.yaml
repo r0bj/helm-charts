@@ -86,6 +86,9 @@ spec:
           livenessProbe:
             failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
             httpGet:
+              {{- if .Values.kubeRBACProxy.enabled }}
+              host: 127.0.0.1
+              {{- end }}
               httpHeaders:
               {{- range $_, $header := .Values.livenessProbe.httpGet.httpHeaders }}
               - name: {{ $header.name }}
@@ -101,6 +104,9 @@ spec:
           readinessProbe:
             failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
             httpGet:
+              {{- if .Values.kubeRBACProxy.enabled }}
+              host: 127.0.0.1
+              {{- end }}
               httpHeaders:
               {{- range $_, $header := .Values.readinessProbe.httpGet.httpHeaders }}
               - name: {{ $header.name }}
